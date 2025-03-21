@@ -30,9 +30,10 @@ def get_action(obs):
     # NOTE: Keep in mind that your Q-table may not cover all possible states in the testing environment.
     #       To prevent crashes, implement a fallback strategy for missing keys. 
     #       Otherwise, even if your agent performs well in training, it may fail during testing.
-    if obs not in Q_table:
-        Q_table[obs] = np.random.uniform(-1, 1, 6).tolist()
-    prob = torch.tensor(softmax(Q_table[obs]), dtype=torch.float32)
+    obs_key = (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15])
+    if obs_key not in Q_table:
+        Q_table[obs_key] = np.random.uniform(-1, 1, 6).tolist()
+    prob = torch.tensor(softmax(Q_table[obs_key]), dtype=torch.float32)
     action = torch.multinomial(prob, num_samples=1)
     
     # 更新 Q-table 並存回檔案
