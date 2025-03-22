@@ -41,9 +41,9 @@ def get_action(obs):
     obs_key = (last_action, obs[10], obs[11], obs[12], obs[13], obs[14], obs[15])
     if obs_key not in Q_table:
         Q_table[obs_key] = np.random.uniform(-1, 1, 6).tolist()
-    #prob = torch.tensor(softmax(Q_table[obs_key]), dtype=torch.float32)
-    #action = int(torch.multinomial(prob, num_samples=1))
-    action = np.argmax(Q_table[obs_key])
+    prob = torch.tensor(softmax(Q_table[obs_key]), dtype=torch.float32)
+    action = int(torch.multinomial(prob, num_samples=1))
+    #action = np.argmax(Q_table[obs_key])
     
     # 更新 Q-table 並存回檔案
     with open(A_FILE, "wb") as f1:
